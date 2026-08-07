@@ -25,7 +25,7 @@ func (t *Training) Parse(datastring string) (err error) {
 	}
 	t.Steps, err = strconv.Atoi(data[0])
 	if err != nil {
-		return err
+		return fmt.Errorf("invalid steps format: %w", err)
 	}
 	if t.Steps <= 0 {
 		return errors.New("Количество шагов должно быть больше 0")
@@ -33,7 +33,7 @@ func (t *Training) Parse(datastring string) (err error) {
 
 	t.Duration, err = time.ParseDuration(data[2])
 	if err != nil {
-		return err
+		return fmt.Errorf("invalid duration format: %w", err)
 	}
 	if t.Duration <= 0 {
 		return errors.New("Длительность тренировки должна быть больше 0")
@@ -66,7 +66,7 @@ func (t Training) ActionInfo() (string, error) {
 	}
 
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("Calories error: %w", err)
 	}
 
 	var builder strings.Builder

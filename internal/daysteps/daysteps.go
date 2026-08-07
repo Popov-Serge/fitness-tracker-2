@@ -25,7 +25,7 @@ func (ds *DaySteps) Parse(datastring string) (err error) {
 
 	ds.Steps, err = strconv.Atoi(dayData[0])
 	if err != nil {
-		return err
+		return fmt.Errorf("invalid steps format: %w", err)
 	}
 
 	if ds.Steps <= 0 {
@@ -34,7 +34,7 @@ func (ds *DaySteps) Parse(datastring string) (err error) {
 
 	ds.Duration, err = time.ParseDuration(dayData[1])
 	if err != nil {
-		return err
+		return fmt.Errorf("invalid duration format: %w", err)
 	}
 
 	if ds.Duration <= 0 {
@@ -53,7 +53,7 @@ func (ds DaySteps) ActionInfo() (string, error) {
 	builder.WriteString(distance)
 	calories, err := spentenergy.WalkingSpentCalories(ds.Steps, ds.Weight, ds.Height, ds.Duration)
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("Calories error: %w", err)
 	}
 
 	caloriesStr := fmt.Sprintf("Вы сожгли %.2f ккал.\n", calories)

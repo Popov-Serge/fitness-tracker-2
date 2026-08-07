@@ -18,6 +18,7 @@ func Info(dataset []string, dp DataParser) {
 		trainingData, err := dp.ActionInfo()
 		if err != nil {
 			fmt.Println(err)
+			continue
 		}
 
 		fmt.Println(trainingData)
